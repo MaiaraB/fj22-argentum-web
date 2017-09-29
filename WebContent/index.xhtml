@@ -9,7 +9,26 @@
 <title>Argentum Web</title>
 </h:head>
 <h:body>
-	<p:chart type="line" model="#{argentumBean.modeloGrafico}" />
+	<h:form>
+		<h:panelGrid columns="5">
+			<h:outputLabel value="Média Móvel: " />
+			<p:selectOneButton value="#{argentumBean.nomeMedia}">
+				<f:selectItem itemLabel="Simples" itemValue="MediaMovelSimples" />
+				<f:selectItem itemLabel="Ponderada" itemValue="MediaMovelPonderada" />
+			</p:selectOneButton>
+			
+			<h:outputLabel value="Indicador Base: " />
+			<p:selectOneButton value="#{argentumBean.nomeIndicadorBase}">
+				<f:selectItem itemLabel="Abertura" itemValue="IndicadorAbertura" />
+				<f:selectItem itemLabel="Fechamento" itemValue="IndicadorFechamento" />
+			</p:selectOneButton>
+			
+			<p:commandButton value="Gerar gráfico" update="@form" action="#{argentumBean.geraGrafico}" />
+		</h:panelGrid>
+		<p:chart id="grafico" type="line" model="#{argentumBean.modeloGrafico}" 
+				rendered="#{argentumBean.modeloGrafico != null}"/>
+	</h:form>
+	
 	<h:form>
 		<p:dataTable var="negociacao" value="#{argentumBean.negociacoes}" 
 			paginator="true" rows="15" draggableColumns="true">
